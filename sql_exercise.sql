@@ -137,7 +137,8 @@ WHERE  B.starttime LIKE '2012-09-14%'
 ORDER BY cost DESC
 
 
-/* Q10: Produce a list of facilities with a total revenue less than 1000.
+/* Q10: Produce a list of facilities with a total revenue less than 1000.The output of facility name and total revenue, sorted by revenue. Remember
+that there's a different cost for guests and members! */
 
 SELECT 
        F.name AS Facility_Name,
@@ -149,5 +150,3 @@ FROM Facilities AS F
 GROUP BY F.name
 HAVING Revenue < 1000
 ORDER BY  Revenue
-The output of facility name and total revenue, sorted by revenue. Remember
-that there's a different cost for guests and members! */
