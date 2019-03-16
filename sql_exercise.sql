@@ -116,6 +116,29 @@ ORDER BY cost DESC
 
 /* Q9: This time, produce the same result as in Q8, but using a subquery. */
 
+
+SELECT * 
+FROM (  SELECT 
+       		  DISTINCT(CONCAT(M.firstname ,  " " , M.surname)) AS Member_name,
+	   		  F.name AS Facility_Name,
+	          B.starttime as start_time,
+                  CASE WHEN M.memid > 0 THEN B.slots*F.membercost
+	          ELSE B.slots* F.guestcost 
+       		  END AS cost
+		
+	FROM Members as M
+     	INNER JOIN Bookings as B
+		ON M.memid = B.memid
+       	INNER JOIN Facilities as F
+	        ON B.Facid = F.facid
+	 
+	WHERE  B.starttime LIKE '2012-09-14%'
+     )subquery
+WHERE subquery.cost >30
+ORDER BY subquery.cost DESC
+
+/*
+
 SELECT 
        DISTINCT(CONCAT(M.firstname ,  " " , M.surname)) AS Member_name,
 	   F.name AS Facility_Name,
@@ -134,7 +157,9 @@ FROM Members as M
 WHERE  B.starttime LIKE '2012-09-14%'  
 	   AND  B.slots *  IF ( M.memid >0 , F.membercost , F.guestcost)  >30
 	   
-ORDER BY cost DESC
+ORDER BY cost DESC  
+
+*/
 
 
 /* Q10: Produce a list of facilities with a total revenue less than 1000.The output of facility name and total revenue, sorted by revenue. Remember
